@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutritious Diet Planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+      body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    background: url('./giphy.gif') no-repeat center center/cover;
+}
+
+
+        .content {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background 0.3s ease-in-out;
+        }
+        
+        button:hover {
+            background-color: #218838;
+        }
+        
+        .result-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        #healthForm{
+            display: table;
+            margin: 0 auto;
+        }
+        .rows{
+            display: table-row;
+            /* background-color: aqua; */
+        }
+        label,input {
+            display: table-cell;
+            text-align: start;
+        }
+        .sub{
+            margin-top: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <header>
+            <h1>🍏 Personalized Nutrition Plan 🥗</h1>
+        </header>
+        <main>
+            <section class="input-section">
+                <h2>💡 Enter Your Health Details</h2>
+                <form id="healthForm">
+                    <div class="rows">
+                        <label for="age">📅 Age:</label>
+                        <input type="number" id="age" name="age" required><br>
+                    </div>
+                    <div class="rows">
+                        <label for="weight">⚖️ Weight (kg):</label>
+                        <input type="number" id="weight" name="weight" required><br>
+                    </div>
+                    <div class="rows">
+                        <label for="height">📏 Height (cm):</label>
+                        <input type="number" id="height" name="height" required><br>
+                    </div>
+                    <div class="rows">
+                        <label for="diet">🥗 Dietary Preference:</label>
+                    <select id="diet" name="diet">
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="non-vegetarian">Non-Vegetarian</option>
+                    </select><br>
+                    </div>
+                    <div class="rows">
+                        <label for="goal">🎯 Health Goal:</label>
+                        <select id="goal" name="goal">
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="muscle-gain">Muscle Gain</option>
+                            <option value="general-health">General Health</option>
+                        </select><br>
+                    </div>
+                    <div class="sub">
+                        <button type="submit">🍽️ Get Diet Plan</button>
+                    </div>
+                </form>
+                <!-- <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="age">📅 Age:</label></td>
+                            <td><input type="number" id="age" name="age" required><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="weight">⚖️ Weight (kg):</label></td>
+                            <td><input type="number" id="weight" name="weight" required><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="height">📏 Height (cm):</label></td>
+                            <td><input type="number" id="height" name="height" required><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="diet">🥗 Dietary Preference:</label></td>
+                            <td><select id="diet" name="diet">
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="non-vegetarian">Non-Vegetarian</option>
+                            </select><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="goal">🎯 Health Goal:</label></td>
+                            <td><select id="goal" name="goal">
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Gain</option>
+                                <option value="general-health">General Health</option>
+                            </select></td>
+                        </tr>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><button type="submit">🍽️ Get Diet Plan</button></td>
+                            </tr>
+                        </tfoot>
+                    </tbody>
+                </table> -->
+            </section>
+            
+            <section class="result-section" id="dietPlan">
+                <h2>🥦 Your Recommended Diet Plan</h2>
+                <p id="planOutput">Enter your details to generate a personalized diet plan.</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById("healthForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const age = parseInt(document.getElementById("age").value);
+            const weight = parseFloat(document.getElementById("weight").value);
+            const height = parseFloat(document.getElementById("height").value) / 100;
+            const diet = document.getElementById("diet").value;
+            const goal = document.getElementById("goal").value;
+            
+            if (!age || !weight || !height || !diet || !goal) {
+                document.getElementById("planOutput").innerHTML = "❌ Please fill in all the fields.";
+                return;
+            }
+            
+            const bmi = weight / (height * height);
+            let mealPlan = `🥗 <b>Recommended Diet:</b><br>'';
+            if (goal === "weight-loss") {
+                mealPlan += "- Oats, leafy greens, lean proteins, and nuts.<br>";
+            } else if (goal === "muscle-gain") {
+                mealPlan += "- Eggs, chicken, fish, quinoa, and nuts.<br>";
+            } else {
+                mealPlan += "- Whole grains, legumes, fresh vegetables, and fruits.<br>";
+            }
+            
+            if (bmi < 18.5) {
+                mealPlan += "🍚 Focus on nutrient-dense meals with healthy fats and proteins.";
+            } else if (bmi >= 25) {
+                mealPlan += "🥦 Reduce calorie intake and include fiber-rich foods.";
+            } else {
+                mealPlan += "🍽️ Maintain a balanced and diverse meal plan.";
+            }
+            
+            document.getElementById("planOutput").innerHTML = `✅ Based on your inputs:<br><br>${mealPlan}`;
+              });
+    </script>
+</body>
+</html>
